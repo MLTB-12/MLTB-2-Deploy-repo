@@ -6,7 +6,7 @@
   - Heroku ban specific layer from docker and not all docker layers. In this repository heroku banned `COPY` layer that copy all repository files to docker container. So changing `COPY` layer by removing files, suspension will not occure.
 
 * But how to get repository files to run the code ?
-  - We are using update feature that clone the files from master branch of official repository to docker container before bot startup.
+  - We are using update feature that clone the files from `UPSTREAM_REPO` to docker container before bot startup.
 
 * Is there any other way to avoid suspension?
   - Yes! deploy master branch twice. But how this works ?! When you deploy heroku app with specific name, heroku store docker cache for next time deploy for this app with it's specific name, so docker image will not be downloaded again and again for this app since already downloaded first time unless there is a change in docker layers.
@@ -16,17 +16,16 @@
 **Important Notes for Both Branches**
 1. Don't delete .gitignore file.
 2. Read all variables definitions from master branch readme.
-3. Don't edit/add variables from Heroku, if you want to edit/add simply do it in config.env from gists if using gists or from private repository if added in it, then restart your app. Yuo can only add `CONFIG_FILE_URL` variable from heroku.
+3. Don't edit/add variables from Heroku, if you want to edit/add simply do it in config.env from gists if using gists or from private repository if added in it, then restart your app. You can only add `CONFIG_FILE_URL` variable from heroku.
 4. Keep the programmer inside you away and follow the steps.
 5. Don't deploy from browser or hmanager app, only from cli or workflow.
 
 **Important Notes for Heroku Branch**
 1. This Branch only for DEPLOYING! Don't use it for update!
 2. Generate all your private files from master branch (token.pickle, config.env, drive_folder, cookies.txt ...).
-3. If you want to edit aria.sh or qBittorrent.conf or any other file in repository you must add `UPSTREAM_REPO` of your edited public or private fork else YOU WILL GET THE OFFICIAL CODE AND ALL YOUR CHANGES WILL NOT TAKE EFFECT.
-4. To stay up to date don't fill `UPSTREAM_REPO`, on each `dyno restart` you will get lastest commits from official repository. BUT any change in requirements of official repository you need to update you code and deploy again or your bot will not boot after dyno restart, so if you have problem with this then fill `UPSTREAM_REPO`.
-5. You can fill `UPSTREAM_REPO` by your public/private fork link and fetch manually then you can update your bot by `restart cmd` and `dyno restart`.
-6. If want to add private files before deploying then add them to heroku branch not master branch!
+3. `UPSTREAM_REPO` is required for heroku branch otherwise your bot will not start.
+4. If you want to edit aria.sh or qBittorrent.conf or any other file in repository, edit in your repository that filled for `UPSTREAM_REPO`. For more information read [THIS](https://github.com/anasty17/mirror-leech-telegram-bot/tree/master#upstream-repo-recommended).
+6. If want to add private files before deploying then add them to heroku branch not master branch!.
 
 ------
 
@@ -119,15 +118,13 @@ heroku logs -t
 
 2. Add the below Required Variables one by one by clicking New Repository Secret every time.
 
-   - HEROKU_EMAIL_X: Heroku Account Email Id in which the above app will be deployed
-   - HEROKU_API_KEY_X: Your Heroku API key, get it from https://dashboard.heroku.com/account
-   - HEROKU_APP_NAME_X: Your Heroku app name, Name Must be unique
-   - CONFIG_FILE_URL_X: Copy [This](https://raw.githubusercontent.com/anasty17/mirror-leech-telegram-bot/master/config_sample.env) in any text editor.Remove the _____REMOVE_THIS_LINE_____=True line and fill the variables. For details about config you can see Here. Go to https://gist.github.com and paste your config data. Rename the file to config.env then create secret gist. Click on Raw, copy the link. This will be your CONFIG_FILE_URL.
+   - HEROKU_EMAIL_XX: Heroku Account Email Id in which the above app will be deployed
+   - HEROKU_API_KEY_XX: Your Heroku API key, get it from https://dashboard.heroku.com/account
+   - HEROKU_APP_NAME_XX: Your Heroku app name, Name Must be unique
+   - CONFIG_FILE_URL_XX: Copy [This](https://raw.githubusercontent.com/anasty17/mirror-leech-telegram-bot/master/config_sample.env) in any text editor.Remove the _____REMOVE_THIS_LINE_____=True line and fill the variables. For details about config you can see Here. Go to https://gist.github.com and paste your config data. Rename the file to config.env then create secret gist. Click on Raw, copy the link. This will be your CONFIG_FILE_URL.
 3. Remove commit id from raw link to be able to change variables without updating the CONFIG_FILE_URL in secrets. Should be in this form: https://gist.githubusercontent.com/username/gist-id/raw/config.env
    - Before: https://gist.githubusercontent.com/anasty17/8cce4a4b4e7f4ea47e948b2d058e52ac/raw/19ba5ab5eb43016422193319f28bc3c7dfb60f25/config.env
    - After: https://gist.githubusercontent.com/anasty17/8cce4a4b4e7f4ea47e948b2d058e52ac/raw/config.env
-
-   - You only need to restart your bot after editing config.env Gist secret.
 
 4. After adding all the above Required Variables go to Github Actions tab in your repository.
    - Select Manually Deploy to Heroku workflow as shown below:

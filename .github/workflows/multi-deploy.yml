@@ -3,51 +3,67 @@ name: Multi-Deploy to Heroku
 on: workflow_dispatch
 
 jobs:
-  heroku-1:
+  heroku-11:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - uses: akhileshns/heroku-deploy@v3.12.12
         with:
-          heroku_api_key: ${{secrets.HEROKU_API_KEY_1}}
-          heroku_app_name: ${{secrets.HEROKU_APP_NAME_1}}
-          heroku_email: ${{secrets.HEROKU_EMAIL_1}}
+          heroku_api_key: ${{secrets.HEROKU_API_KEY_11}}
+          heroku_app_name: ${{secrets.HEROKU_APP_NAME_11}}
+          heroku_email: ${{secrets.HEROKU_EMAIL_11}}
           usedocker: true
           docker_heroku_process_type: web
           stack: "container"
           region: "us"
         env:
-          HD_CONFIG_FILE_URL: ${{secrets.CONFIG_FILE_URL_1}}
+          HD_CONFIG_FILE_URL: ${{secrets.CONFIG_FILE_URL_11}}
 
 
-  heroku-2:
+  heroku-12:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - uses: akhileshns/heroku-deploy@v3.12.12
         with:
-          heroku_api_key: ${{secrets.HEROKU_API_KEY_2}}
-          heroku_app_name: ${{secrets.HEROKU_APP_NAME_2}}
-          heroku_email: ${{secrets.HEROKU_EMAIL_2}}
+          heroku_api_key: ${{secrets.HEROKU_API_KEY_12}}
+          heroku_app_name: ${{secrets.HEROKU_APP_NAME_12}}
+          heroku_email: ${{secrets.HEROKU_EMAIL_12}}
           usedocker: true
           docker_heroku_process_type: web
           stack: "container"
           region: "us"
         env:
-          HD_CONFIG_FILE_URL: ${{secrets.CONFIG_FILE_URL_2}}
+          HD_CONFIG_FILE_URL: ${{secrets.CONFIG_FILE_URL_12}}
 
-  heroku-3:
+  heroku-21:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - uses: akhileshns/heroku-deploy@v3.12.12
         with:
-          heroku_api_key: ${{secrets.HEROKU_API_KEY_3}}
-          heroku_app_name: ${{secrets.HEROKU_APP_NAME_3}}
-          heroku_email: ${{secrets.HEROKU_EMAIL_3}}
+          heroku_api_key: ${{secrets.HEROKU_API_KEY_21}}
+          heroku_app_name: ${{secrets.HEROKU_APP_NAME_21}}
+          heroku_email: ${{secrets.HEROKU_EMAIL_21}}
           usedocker: true
           docker_heroku_process_type: web
           stack: "container"
           region: "us"
         env:
-          HD_CONFIG_FILE_URL: ${{secrets.CONFIG_FILE_URL_3}}
+          HD_CONFIG_FILE_URL: ${{secrets.CONFIG_FILE_URL_21}}
+
+  heroku-22:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: akhileshns/heroku-deploy@v3.12.12
+        with:
+          heroku_api_key: ${{secrets.HEROKU_API_KEY_22}}
+          heroku_app_name: ${{secrets.HEROKU_APP_NAME_22}}
+          heroku_email: ${{secrets.HEROKU_EMAIL_22}}
+          usedocker: true
+          docker_heroku_process_type: web
+          stack: "container"
+          region: "us"
+        env:
+          HD_CONFIG_FILE_URL: ${{secrets.CONFIG_FILE_URL_22}}
