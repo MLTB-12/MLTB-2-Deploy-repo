@@ -43,21 +43,22 @@ try:
     if len(UPSTREAM_BRANCH) == 0:
        raise TypeError
 except:
-    UPSTREAM_BRANCH = 'master'
+    UPSTREAM_BRANCH = 'main'
 
-if ospath.exists('.git'):
-    srun(["rm", "-rf", ".git"])
+if UPSTREAM_REPO is not None:
+    if ospath.exists('.git'):
+        srun(["rm", "-rf", ".git"])
 
-update = srun([f"git init -q \
-                 && git config --global user.email github9.0@outlook.com \
-                 && git config --global user.name GH-09 \
-                 && git add . \
-                 && git commit -sm update -q \
-                 && git remote add origin {UPSTREAM_REPO} \
-                 && git fetch origin -q \
-                 && git reset --hard origin/{UPSTREAM_BRANCH} -q"], shell=True)
+    update = srun([f"git init -q \
+                     && git config --global user.email github9.0@outlook.com \
+                     && git config --global user.name GH-09 \
+                     && git add . \
+                     && git commit -sm update -q \
+                     && git remote add origin {UPSTREAM_REPO} \
+                     && git fetch origin -q \
+                     && git reset --hard origin/{UPSTREAM_BRANCH} -q"], shell=True)
 
-if update.returncode == 0:
-    log_info('Successfully updated with latest commit from UPSTREAM_REPO')
-else:
-    log_error('Something went wrong while updating, check UPSTREAM_REPO if valid or not!')
+    if update.returncode == 0:
+        log_info('Successfully updated with latest commit from UPSTREAM_REPO')
+    else:
+        log_error('Something went wrong while updating, check UPSTREAM_REPO if valid or not!')
